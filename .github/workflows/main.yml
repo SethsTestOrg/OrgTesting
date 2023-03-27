@@ -66,6 +66,6 @@ jobs:
         with:
           title: Merge conflict on ${GITHUB_REF}
           body: There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
-          branch: dev
+          branch: stage
           base: master
           token: ${{ secrets.GH_PAT }}
