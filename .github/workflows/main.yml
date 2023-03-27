@@ -62,6 +62,6 @@ jobs:
           commit-message: Auto-generated merge conflict PR
           body: |
             There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
-          base: dev
-          branch: merge-conflict-${GITHUB_REF}
+          base: ${{ github.ref }}
+          branch: dev
           token: ${{ secrets.GH_PAT }}
