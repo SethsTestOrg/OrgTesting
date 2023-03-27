@@ -17,38 +17,42 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
-          
+
       - name: Merge stage into dev
         if: github.ref == 'refs/heads/stage'
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "<>"
+          git config user.name "sethchurch"
+          git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
           git merge --ff-only stage || git push -u origin HEAD
+          git push
 
       - name: Merge hotfix into dev
         if: github.ref == 'refs/heads/hotfix'
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "<>"
+          git config user.name "sethchurch"
+          git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
           git merge --ff-only hotfix || git push -u origin HEAD
+          git push
 
       - name: Merge master into stage
         if: github.ref == 'refs/heads/master'
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "<>"
+          git config user.name "sethchurch"
+          git config user.email "schurch@clearpointstrategy.com"
           git checkout stage
           git merge --ff-only master || git push -u origin HEAD
+          git push
 
       - name: Merge stage into dev after master merge
         if: github.ref == 'refs/heads/master'
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "<>"
+          git config user.name "sethchurch"
+          git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
           git merge --ff-only stage || git push -u origin HEAD
+          git push
 
       - name: Create PR for merge conflict
         if: failure()
