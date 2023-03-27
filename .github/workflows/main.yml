@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
@@ -54,18 +54,7 @@ jobs:
           git merge --ff-only stage
           git push -u origin HEAD
 
-      - name: Update all branches
-        if: failure()
-        run: |
-          git fetch --all
-          git pull --all
-
-      - name: Create PR for merge conflict
-        if: failure()
-        uses: peter-evans/create-pull-request@v4
-        with:
-          title: Merge conflict on ${GITHUB_REF}
-          body: There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
-          branch: stage
-          base: master
-          token: ${{ secrets.GH_PAT }}
+      - name: create pull request
+        run: gh pr create -B dev -H master --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
