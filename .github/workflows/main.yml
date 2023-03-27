@@ -56,12 +56,12 @@ jobs:
 
       - name: Create PR for merge conflict
         if: failure()
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           title: Merge conflict on ${GITHUB_REF}
           commit-message: Auto-generated merge conflict PR
           body: |
             There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
           base: dev
-          head: ${{ github.ref }}
+          branch: merge-conflict-${GITHUB_REF}
           token: ${{ secrets.GH_PAT }}
