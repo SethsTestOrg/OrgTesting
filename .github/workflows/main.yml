@@ -54,6 +54,13 @@ jobs:
           git merge --ff-only stage
           git push -u origin HEAD
 
+      - name: Update all branches
+        if: failure()
+        run: |
+          git merge --abort
+          git fetch --all
+          git pull --all
+
       - name: Create PR for merge conflict
         if: failure()
         uses: peter-evans/create-pull-request@v4
@@ -62,6 +69,6 @@ jobs:
           commit-message: Auto-generated merge conflict PR
           body: |
             There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
-          base: master
           branch: stage
+          base: dev
           token: ${{ secrets.GH_PAT }}
