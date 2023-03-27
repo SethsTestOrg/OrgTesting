@@ -24,8 +24,8 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
-          git merge --ff-only stage || git push -u origin HEAD
-          git push
+          git merge --ff-only stage
+          git push -u origin HEAD
 
       - name: Merge hotfix into dev
         if: github.ref == 'refs/heads/hotfix'
@@ -33,8 +33,8 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
-          git merge --ff-only hotfix || git push -u origin HEAD
-          git push
+          git merge --ff-only hotfix
+          git push -u origin HEAD
 
       - name: Merge master into stage
         if: github.ref == 'refs/heads/master'
@@ -42,8 +42,8 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout stage
-          git merge --ff-only master || git push -u origin HEAD
-          git push
+          git merge --ff-only master
+          git push -u origin HEAD
 
       - name: Merge stage into dev after master merge
         if: github.ref == 'refs/heads/master'
@@ -51,8 +51,8 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
-          git merge --ff-only stage || git push -u origin HEAD
-          git push
+          git merge --ff-only stage
+          git push -u origin HEAD
 
       - name: Create PR for merge conflict
         if: failure()
