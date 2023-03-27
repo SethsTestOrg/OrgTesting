@@ -65,9 +65,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           title: Merge conflict on ${GITHUB_REF}
-          commit-message: Auto-generated merge conflict PR
-          body: |
-            There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
-          branch: stage
-          base: dev
+          body: There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
+          branch: dev
+          base: master
           token: ${{ secrets.GH_PAT }}
