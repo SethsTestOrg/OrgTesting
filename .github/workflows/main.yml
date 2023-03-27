@@ -1,0 +1,60 @@
+name: Automatic merging
+
+on:
+  push:
+    branches:
+      - stage
+      - hotfix
+      - master
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge stage into dev
+        if: github.ref == 'refs/heads/stage'
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "<>"
+          git checkout dev
+          git merge --ff-only stage || git push -u origin HEAD
+
+      - name: Merge hotfix into dev
+        if: github.ref == 'refs/heads/hotfix'
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "<>"
+          git checkout dev
+          git merge --ff-only hotfix || git push -u origin HEAD
+
+      - name: Merge master into stage
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "<>"
+          git checkout stage
+          git merge --ff-only master || git push -u origin HEAD
+
+      - name: Merge stage into dev after master merge
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "<>"
+          git checkout dev
+          git merge --ff-only stage || git push -u origin HEAD
+
+      - name: Create PR for merge conflict
+        if: failure()
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: Merge conflict on ${GITHUB_REF}
+          commit-message: Auto-generated merge conflict PR
+          body: |
+            There was a merge conflict while automatically merging ${GITHUB_REF} into its downstream branch. Please review and merge this PR manually.
+          base: dev
+          head: ${{ github.ref }}
+          token: ${{ secrets.GH_PAT }}
