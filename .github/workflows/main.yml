@@ -58,4 +58,4 @@ jobs:
         if: failure()
         run: gh pr create -B dev -H master --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_KEY }}
