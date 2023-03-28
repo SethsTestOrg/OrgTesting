@@ -1,3 +1,2 @@
 # OrgTesting
-aaaa
-:)! :( aaaa
+:)
