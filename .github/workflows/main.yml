@@ -84,6 +84,6 @@ jobs:
 
       - name: create pull request
         if: failure()
-        run: gh pr create -B ${{ env.BASE_BRANCH }} -H ${{ env.BRANCH_TO_MERGE }} --title 'Merge ${{ env.BRANCH_TO_MERGE }} into ${{ env.BASE_BRANCH }}' --body 'Created by Github action'
+        run: gh pr create -B ${{ env.BASE_BRANCH }} -H ${{ env.BRANCH_TO_MERGE }} --title 'Merge Conflict ${{ env.BRANCH_TO_MERGE }} -> ${{ env.BASE_BRANCH }}' --body 'A merge conflict ocurred while attempting to automatically merge these branches. Please resolve the conflict and merge manually.'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
