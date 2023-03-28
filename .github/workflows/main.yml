@@ -34,7 +34,7 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
-          git merge --ff-only origin/stage
+          git merge origin/stage
           git push -u origin HEAD
 
       - name: Set Branch and Merge banch on Hotfix -> Dev
@@ -49,7 +49,7 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
-          git merge --ff-only origin/hotfix
+          git merge origin/hotfix
           git push -u origin HEAD
 
       - name: Set Branch and Merge banch on Master -> Stage
@@ -64,7 +64,7 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout stage
-          git merge --ff-only origin/master
+          git merge origin/master
           git push -u origin HEAD
 
       - name: Set Branch and Merge banch on Stage -> Dev
@@ -79,7 +79,7 @@ jobs:
           git config user.name "sethchurch"
           git config user.email "schurch@clearpointstrategy.com"
           git checkout dev
-          git merge --ff-only origin/stage
+          git merge origin/stage
           git push -u origin HEAD
 
       - name: create pull request
