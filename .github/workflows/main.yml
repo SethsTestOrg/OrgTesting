@@ -1,4 +1,4 @@
-name: Automatic merging
+name: Automatically Sync Branches
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
   BASE_BRANCH: ${{ github.ref }}
 
 jobs:
-  merge:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
