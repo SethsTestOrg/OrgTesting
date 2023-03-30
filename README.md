@@ -1,7 +1,2 @@
 # OrgTesting
-bb
-:) bbbdd!
-
-khsfjhlkjf
-
-aaaa
+azaaa
