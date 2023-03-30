@@ -10,6 +10,7 @@ on:
 env:
   BRANCH_TO_MERGE: ${{ github.ref }}
   BASE_BRANCH: ${{ github.ref }}
+  TEMP_BRANCH: ${{ github.ref }}-merge-conflict-${{ github.run_id }}
 
 jobs:
   sync:
@@ -84,6 +85,12 @@ jobs:
 
       - name: create pull request
         if: failure()
-        run: gh pr create -B ${{ env.BASE_BRANCH }} -H ${{ env.BRANCH_TO_MERGE }} --title 'Merge Conflict ${{ env.BRANCH_TO_MERGE }} -> ${{ env.BASE_BRANCH }}' --body 'A merge conflict ocurred while attempting to automatically merge these branches. Please resolve the conflict and merge manually.'
+        run: |
+          echo "Creating pull request"
+          echo "TEMP_BRANCH=${{ env.BRANCH_TO_MERGE }}-merge-conflict-${{ github.run_id }}" >> $GITHUB_ENV
+          git checkout origin ${{ env.BRANCH_TO_MERGE }}
+          git checkout -b ${{ env.TEMP_BRANCH }}
+          git push -u origin ${{ env.TEMP_BRANCH }}
+          gh pr create -B ${{ env.BASE_BRANCH }} -H ${{ env.TEMP_BRANCH }} --title 'Merge Conflict ${{ env.BRANCH_TO_MERGE }} -> ${{ env.BASE_BRANCH }}' --body 'A merge conflict ocurred while attempting to automatically merge these branches. Please resolve the conflict and merge manually.'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
