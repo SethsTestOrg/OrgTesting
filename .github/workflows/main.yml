@@ -10,7 +10,7 @@ on:
 env:
   BRANCH_TO_MERGE: ${{ github.ref }}
   BASE_BRANCH: ${{ github.ref }}
-  TEMP_BRANCH: ${{ github.ref }}-merge-conflict-${{ github.run_id }}
+  TEMP_BRANCH: merge-conflict-${{ github.run_id }}
 
 jobs:
   sync:
@@ -87,7 +87,6 @@ jobs:
         if: failure()
         run: |
           echo "Creating pull request"
-          echo "TEMP_BRANCH=conflict-${{ github.run_id }}" >> $GITHUB_ENV
           git checkout ${{ env.BRANCH_TO_MERGE }} --force && git pull
           git checkout -b ${{ env.TEMP_BRANCH }}
           git push -u origin ${{ env.TEMP_BRANCH }}
