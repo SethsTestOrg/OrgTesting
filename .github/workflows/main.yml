@@ -88,7 +88,7 @@ jobs:
         run: |
           echo "Creating pull request"
           echo "TEMP_BRANCH=${{ env.BRANCH_TO_MERGE }}-merge-conflict-${{ github.run_id }}" >> $GITHUB_ENV
-          git checkout origin ${{ env.BRANCH_TO_MERGE }}
+          git checkout ${{ env.BRANCH_TO_MERGE }} --force && git pull
           git checkout -b ${{ env.TEMP_BRANCH }}
           git push -u origin ${{ env.TEMP_BRANCH }}
           gh pr create -B ${{ env.BASE_BRANCH }} -H ${{ env.TEMP_BRANCH }} --title 'Merge Conflict ${{ env.BRANCH_TO_MERGE }} -> ${{ env.BASE_BRANCH }}' --body 'A merge conflict ocurred while attempting to automatically merge these branches. Please resolve the conflict and merge manually.'
